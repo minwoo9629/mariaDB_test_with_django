@@ -1,0 +1,31 @@
+<h1> 회원가입 예제 Maria DB사용</h1>
+
+<form action="{%url 'signup'%}" method="POST">
+    {% csrf_token %}
+    UserID:
+    <br>
+    <input name="username" type="text" value="">
+    <br>
+    PassWord:
+    <br>
+    <input name="password1" type="password" value="">
+    <br>
+    Confirm PassWord:
+    <br>
+    <input name="password2" type="password" value="">
+    <br>
+    NickName:
+    <br>
+    <input name="nickname" type="text" value="">
+    <br>
+    StudentID:
+    <br>
+    <input name="studentid" type="text" value="">
+    <br>
+    PhoneNumber:
+    <br>
+    <input name="userphone" type="text" value="">
+    <br>
+    <br>
+    <input type="submit">
+</form>

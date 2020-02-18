@@ -1,0 +1,26 @@
+<h1> 로그인 예제 </h1>
+{% if user.is_authenticated %}
+<p>{{user.profileuser.NickName}} 로그인중</p>
+<p>{{user.username}} 로그인중</p>
+<a href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+<form id="logout" method="POST" action="{% url 'logout' %}">
+	{% csrf_token %} <input type="hidden" />
+</form>
+{% else %}
+<form action="" method="POST">
+    {% csrf_token%}
+    UserID:
+    <br>
+    <input name="username" type="text" placeholder="아이디 입력">
+    <br>
+    PassWord:
+    <br>
+    <input name="password" type="password" value="">
+    <br>
+    Confirm PassWord:
+    <br>
+    <input type="submit" value="Login">
+</form>
+{% endif %}
+<a href="{%url 'signup'%}">회원가입하기</a>
+<a href="{%url 'search'%}">학생정보보기</a>

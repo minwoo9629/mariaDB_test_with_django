@@ -1,0 +1,17 @@
+<p>유저 조회하기</p>
+<table border="1" width="700" height="200">
+    <th>User ID</th>
+    <th>닉네임</th>
+    <th>학번</th>
+    <th>전화번호</th>
+    {% for userdata in alluserdata%}
+    <tr>
+        <td>{{userdata.username}}</td>
+        <td>{{userdata.profileuser.NickName}}</td>
+        <td>{{userdata.profileuser.StudentID}}</td>
+        {%for num in userdata.userphone_set.all%}
+        <td>{{num.userphone}}</td>
+        {%endfor%}
+    </tr>
+    {%endfor%}
+</table>
