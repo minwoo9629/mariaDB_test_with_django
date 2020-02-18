@@ -10,4 +10,4 @@ class ProfileUser(models.Model):
 
 class UserPhone(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    userphone = models.CharField(max_length=30)
+    UserPhone = models.CharField(max_length=30)
