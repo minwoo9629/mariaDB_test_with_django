@@ -24,10 +24,10 @@ def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-            name = request.POST['nickname']
+            nick_name = request.POST['nickname']
             sid = request.POST['studentid']
             uphone = request.POST['userphone']
-            userprofile = ProfileUser(user=user, NickName=nname, StudentID=sid)
+            userprofile = ProfileUser(user=user, NickName=nick_name, StudentID=sid)
             userphone = UserPhone(user=user, userphone=uphone)
             userprofile.save()
             userphone.save()
