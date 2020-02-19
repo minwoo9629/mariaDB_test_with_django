@@ -1,17 +1,83 @@
-<p>유저 조회하기</p>
-<table border="1" width="700" height="200">
-    <th>User ID</th>
-    <th>닉네임</th>
-    <th>학번</th>
-    <th>전화번호</th>
-    {% for userdata in alluserdata%}
-    <tr>
-        <td>{{userdata.username}}</td>
-        <td>{{userdata.profileuser.NickName}}</td>
-        <td>{{userdata.profileuser.StudentID}}</td>
-        {%for num in userdata.userphone_set.all%}
-        <td>{{num.UserPhone}}</td>
-        {%endfor%}
-    </tr>
-    {%endfor%}
-</table>
+<!DOCTYPE html>
+<html lang="ko">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<head>
+    <meta charset="utf-8">
+    <title>학생 정보 출력</title>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <table class="talbe table-striped" width="100%">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>닉네임</th>
+                    <th>학번</th>
+                    <th>전화번호</th>
+                </tr>
+            </thead>
+            {% for user_page in user_page %}
+            <tr>
+                <td>{{user_page.username}}</td>
+                <td>{{user_page.profileuser.NickName}}</td>
+                <td>{{user_page.profileuser.StudentID}}</td>
+                {% for user_phone in user_page.userphone_set.all %}
+                <td>{{user_phone.UserPhone}}</td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </table>
+        <div class="container">
+            <br>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <a class="page-link" href="?page=1">처음</a>
+                    {%if user_page.has_previous%}
+                    <a class="page-link" href="?page={{user_page.previous_page_number}}">이전</a>
+                    {% else %}
+                    <a class="page-link" href="#">이전</a>
+                    {%endif%}
+                    {% for page in page_range%}
+                    {%if page == user_page.number%}
+                    <li class="page-item active" aria-current="page" {% if page == user_page.number %}class="active"
+                        {% endif %}>
+                        <a class="page-link" href="?page={{page}}">{{page}}<span class="sr-only">(current)</span></a>
+                    </li>
+                    {%else%}
+                    <li class="page-item" {% if page == user_page.number %}class="active" {% endif %}>
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+                    {%endif%}
+
+                    {% endfor %}
+                    {%if user_page.has_next%}
+                    <a class="page-link" href="?page={{user_page.next_page_number}}">다음</a>
+                    {%else%}
+                    <a class="page-link" href="#">다음</a>
+                    {%endif%}
+                    <a class="page-link" href="?page={{user_page.paginator.num_pages}}">끝</a>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

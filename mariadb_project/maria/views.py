@@ -1,11 +1,36 @@
+import math
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import ProfileUser, UserPhone
+from django.core.paginator import Paginator
 # Create your views here.
 def search(request):
-    alluserdata = User.objects.all()
-    return render(request, 'search.html',{'alluserdata':alluserdata})
+    alluserdata = User.objects.all().order_by('profileuser__StudentID')
+    # order_by에서 다른 모델 객체를 이용할땐 이중 언더바 사용
+
+    paginator = Paginator(alluserdata, 5)    
+    # 사용자 정보 5개를 한 페이지로 자름.
+    page = request.GET.get('page')
+    # request된 페이지 번호를 알아내 변수에 담는다.
+
+    user_page = paginator.get_page(page)
+    # 내가 원하는 페이지 가져오기
+
+    show_page_range = 5
+    
+    max_index = len(paginator.page_range)
+
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / show_page_range ) * show_page_range
+    end_index = start_index + show_page_range
+    if end_index >= max_index:
+        end_index = max_index
+    
+    page_range = paginator.page_range[start_index:end_index]
+    context = {'alluserdata':alluserdata, 'user_page':user_page, 'page_range':page_range}
+    
+    return render(request, 'search.html', context)
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
